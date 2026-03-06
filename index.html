@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>115年度台中市資訊應用競賽 備賽資料</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .container { max-width: 860px; width: 100%; }
+  .header { text-align: center; margin-bottom: 3rem; }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #a78bfa;
+    padding: 0.3rem 1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+  .header h1 {
+    font-size: 2rem;
+    color: white;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.6rem;
+  }
+  .header p { color: #94a3b8; font-size: 1rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 1.8rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.25);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+  .card-typing::before  { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+  .card-drawing::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .card-slides::before  { background: linear-gradient(90deg, #1a56db, #3b82f6); }
+  .card-scratch::before { background: linear-gradient(90deg, #f59e0b, #a855f7); }
+  .emoji { font-size: 2.2rem; }
+  .card-title { font-size: 1.2rem; font-weight: 700; color: white; }
+  .card-sub { font-size: 0.85rem; color: #94a3b8; line-height: 1.5; }
+  .card-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.3rem;
+  }
+  .tag {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .tag-blue   { background: rgba(59,130,246,0.2); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+  .tag-amber  { background: rgba(245,158,11,0.2); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
+  .tag-purple { background: rgba(168,85,247,0.2); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.3); }
+  .tag-indigo { background: rgba(99,102,241,0.2); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
+  .arrow {
+    margin-left: auto;
+    color: rgba(255,255,255,0.3);
+    font-size: 1.2rem;
+    transition: all 0.2s;
+  }
+  .card:hover .arrow { color: white; transform: translateX(4px); }
+  .card-header { display: flex; align-items: center; gap: 1rem; }
+  .footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    color: #475569;
+    font-size: 0.82rem;
+  }
+  .footer a { color: #7c3aed; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">🏆 115年度 台中市資訊應用競賽</div>
+    <h1>備賽資料導覽</h1>
+    <p>比賽日期：3月17日（週二）｜ 地點：台中市</p>
+  </div>
+
+  <div class="grid">
+    <!-- 打字組 -->
+    <a class="card card-typing" href="typing.html">
+      <div class="card-header">
+        <div class="emoji">⌨️</div>
+        <div>
+          <div class="card-title">英文打字組</div>
+          <div class="card-sub">4位選手 · 10:20–11:00</div>
+        </div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="card-meta">
+        <span class="tag tag-blue">正確率 ≥90%</span>
+        <span class="tag tag-blue">目標 130~200字/分</span>
+        <span class="tag tag-blue">2次取高分</span>
+      </div>
+    </a>
+
+    <!-- 繪圖組 -->
+    <a class="card card-drawing" href="drawing.html">
+      <div class="card-header">
+        <div class="emoji">🎨</div>
+        <div>
+          <div class="card-title">電腦繪圖組</div>
+          <div class="card-sub">4位選手 · 09:00–12:00（3小時）</div>
+        </div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="card-meta">
+        <span class="tag tag-amber">Krita / Gimp</span>
+        <span class="tag tag-amber">1280×720</span>
+        <span class="tag tag-amber">原創30%</span>
+      </div>
+    </a>
+
+    <!-- 簡報組 -->
+    <a class="card card-slides" href="slides.html">
+      <div class="card-header">
+        <div class="emoji">📊</div>
+        <div>
+          <div class="card-title">專題簡報組</div>
+          <div class="card-sub">2位選手 · 09:00–12:00（3小時）</div>
+        </div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="card-meta">
+        <span class="tag tag-indigo">LibreOffice</span>
+        <span class="tag tag-indigo">≤30頁</span>
+        <span class="tag tag-indigo">資料結構35%</span>
+      </div>
+    </a>
+
+    <!-- Scratch組 -->
+    <a class="card card-scratch" href="scratch.html">
+      <div class="card-header">
+        <div class="emoji">🟡</div>
+        <div>
+          <div class="card-title">Scratch程式組</div>
+          <div class="card-sub">2隊4人 · 09:00–12:00（3小時）</div>
+        </div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="card-meta">
+        <span class="tag tag-purple">說明文件15%</span>
+        <span class="tag tag-purple">作品85%</span>
+        <span class="tag tag-purple">2人合作</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="footer">
+    安和國中 資訊科 ｜ 備賽資料僅供選手參考使用
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⌨️ 英文打字組 備賽資料</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Microsoft JhengHei',sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;color:#e2e8f0;padding:2rem}
+.back{display:inline-flex;align-items:center;gap:.5rem;color:#94a3b8;text-decoration:none;font-size:.9rem;margin-bottom:1.5rem;transition:color .2s}
+.back:hover{color:white}
+.hero{text-align:center;margin-bottom:2.5rem}
+.badge{display:inline-block;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#93c5fd;padding:.3rem 1rem;border-radius:999px;font-size:.82rem;margin-bottom:.8rem}
+h1{font-size:2.2rem;font-weight:800;color:white;margin-bottom:.4rem}
+.subtitle{color:#94a3b8;font-size:.95rem}
+.container{max-width:900px;margin:0 auto}
+.section{margin-bottom:2rem}
+.section-title{font-size:1.1rem;font-weight:700;color:#93c5fd;border-bottom:2px solid rgba(59,130,246,.3);padding-bottom:.5rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.info-box{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:12px;padding:1.2rem 1.4rem;margin-bottom:1rem;line-height:1.8;font-size:.92rem}
+.warn-box{background:rgba(239,68,68,.08);border-left:4px solid #ef4444;border-radius:0 12px 12px 0;padding:1rem 1.4rem;margin-bottom:1rem;color:#fca5a5;font-size:.92rem}
+table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;font-size:.9rem}
+thead tr{background:rgba(59,130,246,.25)}
+thead th{padding:.7rem 1rem;text-align:left;font-weight:600;color:#bfdbfe;font-size:.85rem}
+tbody tr:nth-child(even){background:rgba(255,255,255,.04)}
+tbody tr:nth-child(odd){background:rgba(255,255,255,.02)}
+tbody td{padding:.65rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);color:#cbd5e1}
+.mono{font-family:'Courier New',monospace;background:rgba(59,130,246,.15);padding:.15rem .4rem;border-radius:4px;color:#93c5fd;font-size:.9em}
+.tag{display:inline-block;padding:.15rem .6rem;border-radius:999px;font-size:.75rem;font-weight:600;margin:.1rem}
+.tag-blue{background:rgba(59,130,246,.2);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+.tag-green{background:rgba(16,185,129,.2);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)}
+.tag-amber{background:rgba(245,158,11,.2);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+.tag-red{background:rgba(239,68,68,.2);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+.stat-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.2rem;text-align:center}
+.stat-num{font-size:2rem;font-weight:800;color:#3b82f6}
+.stat-label{font-size:.8rem;color:#94a3b8;margin-top:.2rem}
+.week-row-highlight{background:rgba(245,158,11,.08)!important}
+.week-row-exam{background:rgba(239,68,68,.08)!important}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← 返回總覽</a>
+
+  <div class="hero">
+    <div class="badge">⌨️ 英文打字組</div>
+    <h1>英文打字 備賽資料</h1>
+    <p class="subtitle">115年度台中市資訊應用競賽 ｜ 比賽時間：3月17日 10:20–11:00</p>
+  </div>
+
+  <!-- 比賽規則 -->
+  <div class="section">
+    <div class="section-title">📋 比賽規則</div>
+    <div class="info-box">
+      📅 比賽時間：3月17日（週二）10:20 – 11:00<br>
+      ⏱️ 每次測驗 10 分鐘，共進行 <strong style="color:#93c5fd">2 次</strong>，取最高分<br>
+      ✅ 正確率須達 <strong style="color:#6ee7b7">90% 以上</strong>，否則該次成績失格<br>
+      🏆 評分依據：最高速度（正確率達標前提下）
+    </div>
+    <div class="warn-box">⚠️ 正確率未達 90% 的那次成績不計！寧可放慢速度確保正確率，再追求速度。</div>
+  </div>
+
+  <!-- 選手帳密 -->
+  <div class="section">
+    <div class="section-title">🔑 選手帳號密碼</div>
+    <table>
+      <thead><tr><th>#</th><th>姓名</th><th>帳號</th><th>密碼</th><th>現況</th><th>目標</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>杜美玲</td><td><span class="mono">abc12345</span></td><td><span class="mono">typing01</span></td><td><span class="tag tag-green">待測</span></td><td><span class="tag tag-blue">130字/分</span></td></tr>
+        <tr><td>2</td><td>謝吳潪</td><td><span class="mono">abc12346</span></td><td><span class="mono">typing02</span></td><td><span class="tag tag-amber">待測</span></td><td><span class="tag tag-blue">130字/分</span></td></tr>
+        <tr><td>3</td><td>林岳霆</td><td><span class="mono">abc12347</span></td><td><span class="mono">typing03</span></td><td><span class="tag tag-amber">待測</span></td><td><span class="tag tag-blue">130字/分</span></td></tr>
+        <tr><td>4</td><td>林沛瑩</td><td><span class="mono">abc12348</span></td><td><span class="mono">typing04</span></td><td><span class="tag tag-amber">待測</span></td><td><span class="tag tag-blue">130字/分</span></td></tr>
+      </tbody>
+    </table>
+    <div class="warn-box" style="margin-top:.8rem">⚠️ 帳號密碼僅供本次競賽使用，請勿外洩或借用。</div>
+  </div>
+
+  <!-- 每日任務 -->
+  <div class="section">
+    <div class="section-title">📝 每日練習任務</div>
+    <div class="info-box">
+      1️⃣ 登入競賽平台，完成 <strong style="color:#93c5fd">1 回合（10分鐘）</strong>練習<br>
+      2️⃣ 練習後記錄：速度（字/分）、正確率（%）<br>
+      3️⃣ 找出自己常打錯的字母組合，針對弱點反覆練習<br>
+      4️⃣ 目標：每天進步 2–3 字/分
+    </div>
+  </div>
+
+  <!-- 兩週計畫 -->
+  <div class="section">
+    <div class="section-title">📅 兩週練習計畫（3/5 – 3/17）</div>
+    <table>
+      <thead><tr><th>日期</th><th>星期</th><th>類型</th><th>練習重點</th></tr></thead>
+      <tbody>
+        <tr><td>3/5</td><td>三</td><td><span class="tag tag-green">老師指導</span></td><td>登入帳號、基準速度測試、了解評分規則</td></tr>
+        <tr><td>3/6</td><td>四</td><td><span class="tag tag-green">老師指導</span></td><td>找出個人弱點字母組合，專項練習</td></tr>
+        <tr><td>3/7</td><td>五</td><td><span class="tag tag-blue">自主練習</span></td><td>練習1回合，記錄速度與正確率</td></tr>
+        <tr><td>3/10</td><td>一</td><td><span class="tag tag-blue">自主練習</span></td><td>練習1回合，嘗試提升速度</td></tr>
+        <tr class="week-row-highlight"><td>3/11</td><td>二</td><td><span class="tag tag-amber">模擬實戰</span></td><td>🔥 模擬比賽：正式10分鐘計時，記錄成績</td></tr>
+        <tr><td>3/12</td><td>三</td><td><span class="tag tag-green">老師指導</span></td><td>弱點補強：針對3/11模擬中發現的問題</td></tr>
+        <tr><td>3/13</td><td>四</td><td><span class="tag tag-green">老師指導</span></td><td>速度衝刺練習，目標達到130字/分</td></tr>
+        <tr><td>3/14</td><td>五</td><td><span class="tag tag-blue">自主練習</span></td><td>練習1回合，穩定速度與正確率</td></tr>
+        <tr><td>3/16</td><td>日</td><td><span class="tag tag-blue">自主練習</span></td><td>輕鬆練習1回合，確認帳號可登入</td></tr>
+        <tr class="week-row-exam"><td>3/17</td><td>二</td><td><span class="tag tag-red">🏆 比賽</span></td><td>10:20到場，10:20–11:00正式比賽，共2次取高分</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 得分策略 -->
+  <div class="section">
+    <div class="section-title">💡 得分策略</div>
+    <div class="grid2">
+      <div class="stat-card">
+        <div class="stat-num">90%</div>
+        <div class="stat-label">正確率最低門檻<br>低於此分數失格</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">130+</div>
+        <div class="stat-label">目標字/分<br>具競爭力的成績</div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:1rem">
+      🎯 <strong>第一次</strong>：穩穩打，正確率優先，確保不失格<br>
+      🚀 <strong>第二次</strong>：在正確率達標的前提下，衝刺速度<br>
+      ❌ <strong>不要</strong>為了追速度而犧牲正確率，失格比低速更慘
+    </div>
+  </div>
+
+  <!-- 比賽當天 -->
+  <div class="section">
+    <div class="section-title">✅ 比賽當天自我檢查</div>
+    <div class="info-box">
+      ☐ 帳號密碼已確認可以登入<br>
+      ☐ 鍵盤設定為英文輸入模式<br>
+      ☐ 了解計分方式（2次取高分）<br>
+      ☐ 記住：第一次穩，第二次衝<br>
+      ☐ 練習時保持坐姿端正、雙手放鬆
+    </div>
+  </div>
+</div>
+</body>
+</html>

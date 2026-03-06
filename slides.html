@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📊 專題簡報組 備賽資料</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','Microsoft JhengHei',sans-serif;background:linear-gradient(135deg,#0f0c29,#1e1b4b,#1a0533);min-height:100vh;color:#e2e8f0;padding:2rem}
+.back{display:inline-flex;align-items:center;gap:.5rem;color:#94a3b8;text-decoration:none;font-size:.9rem;margin-bottom:1.5rem;transition:color .2s}
+.back:hover{color:white}
+.hero{text-align:center;margin-bottom:2.5rem}
+.badge{display:inline-block;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;padding:.3rem 1rem;border-radius:999px;font-size:.82rem;margin-bottom:.8rem}
+h1{font-size:2.2rem;font-weight:800;color:white;margin-bottom:.4rem}
+.subtitle{color:#94a3b8;font-size:.95rem}
+.container{max-width:900px;margin:0 auto}
+.section{margin-bottom:2rem}
+.section-title{font-size:1.1rem;font-weight:700;color:#a5b4fc;border-bottom:2px solid rgba(99,102,241,.3);padding-bottom:.5rem;margin-bottom:1rem}
+.info-box{background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);border-radius:12px;padding:1.2rem 1.4rem;margin-bottom:1rem;line-height:1.9;font-size:.92rem}
+.warn-box{background:rgba(239,68,68,.08);border-left:4px solid #ef4444;border-radius:0 12px 12px 0;padding:1rem 1.4rem;margin-bottom:1rem;color:#fca5a5;font-size:.92rem}
+.success-box{background:rgba(16,185,129,.08);border-left:4px solid #10b981;border-radius:0 12px 12px 0;padding:1rem 1.4rem;margin-bottom:1rem;color:#6ee7b7;font-size:.92rem}
+table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;font-size:.9rem}
+thead tr{background:rgba(99,102,241,.25)}
+thead th{padding:.7rem 1rem;text-align:left;font-weight:600;color:#c7d2fe;font-size:.85rem}
+tbody tr:nth-child(even){background:rgba(255,255,255,.04)}
+tbody tr:nth-child(odd){background:rgba(255,255,255,.02)}
+tbody td{padding:.65rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);color:#cbd5e1}
+.mono{font-family:'Courier New',monospace;background:rgba(99,102,241,.15);padding:.15rem .4rem;border-radius:4px;color:#a5b4fc;font-size:.9em}
+.tag{display:inline-block;padding:.15rem .6rem;border-radius:999px;font-size:.75rem;font-weight:600;margin:.1rem}
+.tag-indigo{background:rgba(99,102,241,.2);color:#a5b4fc;border:1px solid rgba(99,102,241,.3)}
+.tag-green{background:rgba(16,185,129,.2);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)}
+.tag-amber{background:rgba(245,158,11,.2);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+.tag-red{background:rgba(239,68,68,.2);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1rem}
+@media(max-width:600px){.score-grid{grid-template-columns:1fr 1fr}}
+.score-card{background:rgba(255,255,255,.05);border:1px solid rgba(99,102,241,.2);border-radius:12px;padding:1rem;text-align:center}
+.score-num{font-size:1.8rem;font-weight:800;color:#818cf8}
+.score-label{font-size:.78rem;color:#94a3b8;margin-top:.2rem;line-height:1.4}
+.winner-card{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:12px;padding:1rem 1.2rem;margin-bottom:.8rem}
+.winner-title{font-weight:700;color:#6ee7b7;margin-bottom:.3rem;font-size:.95rem}
+.winner-desc{font-size:.85rem;color:#94a3b8;line-height:1.6}
+.week-row-highlight{background:rgba(245,158,11,.08)!important}
+.week-row-exam{background:rgba(239,68,68,.08)!important}
+.time-table td:first-child{color:#a5b4fc;font-weight:600;white-space:nowrap}
+.arch-table td:first-child{color:#fcd34d;font-weight:600}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← 返回總覽</a>
+
+  <div class="hero">
+    <div class="badge">📊 專題簡報組</div>
+    <h1>專題簡報 備賽資料</h1>
+    <p class="subtitle">115年度台中市資訊應用競賽 ｜ 比賽時間：3月17日 09:00–12:00（3小時）</p>
+  </div>
+
+  <!-- 帳號密碼 -->
+  <div class="section">
+    <div class="section-title">🔑 選手帳號密碼</div>
+    <table>
+      <thead><tr><th>#</th><th>姓名</th><th>帳號</th><th>密碼</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>趙思喬（708-26）</td><td><span class="mono">dcwjfmm8</span></td><td><span class="mono">jf24ut</span></td><td><span class="tag tag-amber">⚠️ 測試上傳未完成</span></td></tr>
+        <tr><td>2</td><td>陳郁姍（708-23）</td><td><span class="mono">dcwjfmm8</span></td><td><span class="mono">jf24ut</span></td><td><span class="tag tag-amber">⚠️ 測試上傳未完成</span></td></tr>
+        <tr><td>3</td><td>劉芸圻（710-25）</td><td><span class="mono">nbhxqec3</span></td><td><span class="mono">fsdmka</span></td><td><span class="tag tag-amber">⚠️ 測試上傳未完成</span></td></tr>
+        <tr><td>4</td><td>陳盈吟（708-22）</td><td><span class="mono">nbhxqec3</span></td><td><span class="mono">fsdmka</span></td><td><span class="tag tag-amber">⚠️ 測試上傳未完成</span></td></tr>
+      </tbody>
+    </table>
+    <div class="warn-box" style="margin-top:.8rem">⚠️ 兩隊皆尚未完成測試上傳！今天（3/5）立即登入平台測試，截圖回傳老師確認。</div>
+  </div>
+
+  <!-- 評分標準 -->
+  <div class="section">
+    <div class="section-title">📊 評分標準（共100分）</div>
+    <div class="score-grid">
+      <div class="score-card"><div class="score-num">35%</div><div class="score-label">資料結構<br>目錄、主題展開、結語、來源</div></div>
+      <div class="score-card"><div class="score-num">25%</div><div class="score-label">版面設計<br>配色、圖文比、統一風格</div></div>
+      <div class="score-card"><div class="score-num">25%</div><div class="score-label">內容<br>正確性、條理、相關性</div></div>
+      <div class="score-card"><div class="score-num">5%</div><div class="score-label">創用CC<br>加授權標示直接得分</div></div>
+      <div class="score-card"><div class="score-num">5%</div><div class="score-label">手法創意<br>版面設計、動畫</div></div>
+      <div class="score-card"><div class="score-num">5%</div><div class="score-label">色彩美觀<br>配色和諧、不雜亂</div></div>
+    </div>
+    <div class="success-box">✅ 資料結構 35% 是最大分！封面→目錄→前言→主題→結語→資料來源，缺一頁都會掉分。</div>
+  </div>
+
+  <!-- 得獎作品分析 -->
+  <div class="section">
+    <div class="section-title">🏆 四份特優得獎作品共同規律</div>
+    <div class="winner-card"><div class="winner-title">① 架構公式固定（最重要）</div><div class="winner-desc">封面 → 目錄 → 前言 → 主題一（2-3子頁）→ 主題二 → 主題三 → 結語 → 資料來源。所有特優都有這個完整架構。</div></div>
+    <div class="winner-card"><div class="winner-title">② 目錄頁必備＋每頁有「回目錄」按鈕</div><div class="winner-desc">4份都有目錄，且每頁右上角都有超連結按鈕可跳回目錄，顯示設計的細緻度。</div></div>
+    <div class="winner-card"><div class="winner-title">③ 每頁大字少文字</div><div class="winner-desc">標題字≥36pt，每頁文字不超過50字，重點用條列式，不貼大段落文字。圖片約佔60%。</div></div>
+    <div class="winner-card"><div class="winner-title">④ 統一配色＋資料來源頁</div><div class="winner-desc">全簡報只用1-2個主色，配色一致。資料來源頁完整列出，直接影響35%的資料結構分數。</div></div>
+  </div>
+
+  <!-- 建議架構 -->
+  <div class="section">
+    <div class="section-title">📐 建議架構公式（20頁）</div>
+    <table class="arch-table">
+      <thead><tr><th>頁次</th><th>頁面</th><th>內容說明</th></tr></thead>
+      <tbody>
+        <tr><td>第1頁</td><td>封面</td><td>標題＋創用CC授權標示＋視覺主圖（不放姓名學校）</td></tr>
+        <tr><td>第2頁</td><td>目錄</td><td>列出所有章節，加超連結按鈕直接跳轉</td></tr>
+        <tr><td>第3頁</td><td>前言</td><td>1段話說明主題背景與重要性</td></tr>
+        <tr><td>第4–8頁</td><td>主題一</td><td>第一個大主題，2–3子頁面展開</td></tr>
+        <tr><td>第9–13頁</td><td>主題二</td><td>第二個大主題，同樣2–3子頁面</td></tr>
+        <tr><td>第14–18頁</td><td>主題三</td><td>第三個大主題，同樣2–3子頁面</td></tr>
+        <tr><td>第19頁</td><td>結語</td><td>總結1–2段，回應前言，呼籲行動</td></tr>
+        <tr style="background:rgba(245,158,11,.1)!important"><td>第20頁</td><td>⭐資料來源</td><td>完整列出所有參考資料（必填！影響35%）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 時間分配 -->
+  <div class="section">
+    <div class="section-title">⏱️ 比賽3小時時間分配</div>
+    <table class="time-table">
+      <thead><tr><th>時間</th><th>時長</th><th>任務</th></tr></thead>
+      <tbody>
+        <tr><td>09:00–09:10</td><td>10分</td><td>看清題目，兩人討論方向、三大主題分工</td></tr>
+        <tr><td>09:10–09:25</td><td>15分</td><td>規劃架構：列出目錄、各頁標題</td></tr>
+        <tr><td>09:25–09:40</td><td>15分</td><td>設定母版（統一配色/背景），做封面+目錄</td></tr>
+        <tr><td>09:40–11:00</td><td>80分</td><td>填充三大主題內容（兩人各負責1–2個主題）</td></tr>
+        <tr><td>11:00–11:20</td><td>20分</td><td>做前言、結語、資料來源三頁</td></tr>
+        <tr><td>11:20–11:40</td><td>20分</td><td>統一版面：對齊、配色一致、加回目錄按鈕</td></tr>
+        <tr style="background:rgba(245,158,11,.08)!important"><td>11:40–11:50</td><td>10分</td><td>加入創用CC授權、全頁最終檢查</td></tr>
+        <tr style="background:rgba(239,68,68,.08)!important"><td>11:50–12:00</td><td>10分</td><td>🚨 存成 .odp 格式，上傳平台，確認成功</td></tr>
+      </tbody>
+    </table>
+    <div class="warn-box" style="margin-top:.8rem">⚠️ 素材包必須事先向主辦單位索取！只能用素材包的圖，比賽現場不提供對外網路。上傳格式必須是 .odp（不是 .pptx）。</div>
+  </div>
+
+  <!-- 兩週計畫 -->
+  <div class="section">
+    <div class="section-title">📅 兩週練習計畫</div>
+    <table>
+      <thead><tr><th>日期</th><th>星期</th><th>類型</th><th>練習重點</th></tr></thead>
+      <tbody>
+        <tr><td>3/5</td><td>三</td><td><span class="tag tag-green">老師指導</span></td><td>登入帳號完成測試上傳（截圖給老師）；研究4份得獎作品架構</td></tr>
+        <tr><td>3/6</td><td>四</td><td><span class="tag tag-green">老師指導</span></td><td>確認素材包內容；兩人討論分工；做完整架構大綱</td></tr>
+        <tr><td>3/7</td><td>五</td><td><span class="tag tag-indigo">自主練習</span></td><td>練習：設定母版、做封面+目錄+前言三頁</td></tr>
+        <tr><td>3/10</td><td>一</td><td><span class="tag tag-indigo">自主練習</span></td><td>完成主題內容頁，練習插入超連結（回目錄按鈕）</td></tr>
+        <tr><td>3/11</td><td>二</td><td><span class="tag tag-green">老師指導</span></td><td>兩隊互相展示，老師用評分標準逐一檢視</td></tr>
+        <tr class="week-row-highlight"><td>3/12</td><td>三</td><td><span class="tag tag-amber">模擬實戰</span></td><td>🔥 完整模擬實戰（老師出題，限時20分鐘做完整架構）</td></tr>
+        <tr><td>3/13</td><td>四</td><td><span class="tag tag-green">老師指導</span></td><td>針對弱點補強；練習快速設定母版（目標5分鐘內完成）</td></tr>
+        <tr><td>3/14</td><td>五</td><td><span class="tag tag-indigo">自主練習</span></td><td>做一份完整20頁簡報，練習控制時間節奏</td></tr>
+        <tr><td>3/16</td><td>日</td><td><span class="tag tag-indigo">自主準備</span></td><td>休息，確認帳號登入正常，確認素材包已備妥</td></tr>
+        <tr class="week-row-exam"><td>3/17</td><td>二</td><td><span class="tag tag-red">🏆 比賽</span></td><td>09:00–12:00，按時間分配執行，11:50前完成上傳</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 自我檢查 -->
+  <div class="section">
+    <div class="section-title">✅ 比賽當天自我檢查（13項）</div>
+    <div class="info-box">
+      ☐ 封面：有標題、有創用CC授權標示、無姓名/學校<br>
+      ☐ 目錄頁：列出所有章節，有超連結跳頁功能<br>
+      ☐ 前言頁：清楚說明主題背景與重要性<br>
+      ☐ 三個主題各自有2–3頁內容展開<br>
+      ☐ 結語頁：總結與呼籲行動<br>
+      ☐ <strong style="color:#fcd34d">資料來源頁：完整列出所有參考資料（必填！）</strong><br>
+      ☐ 全簡報配色統一，每頁有「回目錄」按鈕<br>
+      ☐ 每頁大字少文字（不超過50字/頁）<br>
+      ☐ 所有圖片來自主辦方素材包<br>
+      ☐ 總頁數不超過30頁，檔案不超過30MB<br>
+      ☐ 已存成 <strong style="color:#fca5a5">.odp</strong> 格式（不是 .pptx）<br>
+      ☐ 成功上傳至競賽平台<br>
+      ☐ 截圖確認上傳成功
+    </div>
+  </div>
+</div>
+</body>
+</html>

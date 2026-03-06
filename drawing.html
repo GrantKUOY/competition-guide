@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>繪圖組備賽資料</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+:root {
+  --pink: #EC4899;
+  --pink-light: #F9A8D4;
+  --rose: #BE185D;
+  --orange: #F97316;
+  --amber: #F59E0B;
+  --teal: #14B8A6;
+  --sky: #0EA5E9;
+  --bg: #0D0A14;
+  --surface: #160F24;
+  --surface2: #1E1530;
+  --border: rgba(255,255,255,0.07);
+  --text: #E2E8F0;
+  --muted: #64748B;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  padding: 48px 24px 36px;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(160deg, #1A0828 0%, #0D0A14 60%);
+  border-bottom: 1px solid rgba(236,72,153,0.2);
+}
+.hero::before {
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(236,72,153,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 30%, rgba(14,165,233,0.08) 0%, transparent 50%);
+}
+.hero-badge {
+  display:inline-block;
+  background:rgba(236,72,153,0.15);
+  border:1px solid rgba(236,72,153,0.35);
+  color:#F9A8D4;
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  padding:5px 16px;border-radius:100px;margin-bottom:14px;
+  position:relative;
+}
+.hero h1 {
+  font-size:clamp(22px,4vw,38px);font-weight:900;
+  color:#fff;margin-bottom:6px;position:relative;
+}
+.hero h1 span { color:#F9A8D4; }
+.hero p { color:#94A3B8;font-size:13px;position:relative; }
+.hero-meta {
+  display:flex;gap:16px;justify-content:center;
+  margin-top:18px;flex-wrap:wrap;position:relative;
+}
+.hero-meta span {
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:5px 14px;border-radius:8px;
+  font-size:11px;color:#CBD5E1;
+}
+.hero-meta span strong { color:#F59E0B; }
+
+/* ── Nav ── */
+.nav {
+  display:flex;gap:0;
+  border-bottom:1px solid var(--border);
+  background:#120B1E;
+  overflow-x:auto;scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none;}
+.nav-btn {
+  padding:13px 22px;
+  background:none;border:none;
+  color:#64748B;font-family:inherit;
+  font-size:13px;font-weight:600;
+  cursor:pointer;white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:all 0.2s;
+}
+.nav-btn:hover{color:#F9A8D4;}
+.nav-btn.active{color:#EC4899;border-bottom-color:#EC4899;background:rgba(236,72,153,0.07);}
+
+/* ── Container ── */
+.container{max-width:960px;margin:0 auto;padding:28px 18px;}
+.section{display:none;}
+.section.active{display:block;}
+
+/* ── 評分卡 ── */
+.score-hero {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;margin-bottom:24px;
+}
+.score-pill {
+  border-radius:14px;padding:18px 16px;border:1px solid;text-align:center;
+}
+.score-pill.a{background:rgba(236,72,153,0.08);border-color:rgba(236,72,153,0.3);}
+.score-pill.b{background:rgba(249,115,22,0.08);border-color:rgba(249,115,22,0.3);}
+.score-pill.c{background:rgba(14,165,233,0.08);border-color:rgba(14,165,233,0.3);}
+.score-pill.d{background:rgba(20,184,166,0.08);border-color:rgba(20,184,166,0.3);}
+.score-pill .pct{font-size:32px;font-weight:900;line-height:1;}
+.score-pill.a .pct{color:#F9A8D4;}
+.score-pill.b .pct{color:#FDBA74;}
+.score-pill.c .pct{color:#7DD3FC;}
+.score-pill.d .pct{color:#5EEAD4;}
+.score-pill .label{font-size:12px;color:#94A3B8;margin-top:5px;}
+.score-pill .tip{font-size:10px;margin-top:6px;line-height:1.4;}
+.score-pill.a .tip{color:#FBB6CE;}
+.score-pill.b .tip{color:#FED7AA;}
+.score-pill.c .tip{color:#BAE6FD;}
+.score-pill.d .tip{color:#99F6E4;}
+
+/* ── 得獎作品分析 ── */
+.analysis-intro {
+  background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(14,165,233,0.07));
+  border:1px solid rgba(236,72,153,0.2);
+  border-radius:14px;padding:20px 22px;margin-bottom:24px;
+}
+.analysis-intro h3{font-size:14px;color:#F9A8D4;margin-bottom:6px;}
+.analysis-intro p{font-size:12px;color:#94A3B8;line-height:1.7;}
+
+.works-grid {
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;margin-bottom:28px;
+}
+.work-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.work-card:hover{border-color:rgba(236,72,153,0.35);transform:translateY(-2px);}
+.work-thumb {
+  width:100%;aspect-ratio:16/9;object-fit:cover;
+  display:block;
+}
+.work-thumb.portrait{aspect-ratio:3/4;}
+.work-body{padding:14px 16px;}
+.work-title{font-size:12px;font-weight:700;color:#E2E8F0;margin-bottom:8px;}
+.work-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+.tag {
+  font-size:10px;font-weight:600;padding:2px 9px;border-radius:100px;
+}
+.tag.style{background:rgba(236,72,153,0.15);color:#F9A8D4;border:1px solid rgba(236,72,153,0.3);}
+.tag.comp{background:rgba(14,165,233,0.15);color:#7DD3FC;border:1px solid rgba(14,165,233,0.3);}
+.tag.tech{background:rgba(249,115,22,0.15);color:#FDBA74;border:1px solid rgba(249,115,22,0.3);}
+.tag.theme{background:rgba(20,184,166,0.15);color:#5EEAD4;border:1px solid rgba(20,184,166,0.3);}
+.work-lessons{
+  list-style:none;display:flex;flex-direction:column;gap:4px;
+}
+.work-lessons li{
+  font-size:11px;color:#94A3B8;line-height:1.5;
+  display:flex;gap:6px;align-items:flex-start;
+}
+.work-lessons li::before{content:'→';color:#EC4899;flex-shrink:0;}
+
+/* ── 共同規律 ── */
+.pattern-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;margin-bottom:28px;
+}
+.pattern-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;padding:16px;
+}
+.pattern-card .p-icon{font-size:24px;margin-bottom:8px;}
+.pattern-card h4{font-size:13px;font-weight:700;color:#E2E8F0;margin-bottom:6px;}
+.pattern-card p{font-size:11px;color:#94A3B8;line-height:1.6;}
+.pattern-card .p-score{
+  display:inline-block;
+  margin-top:8px;
+  font-size:10px;font-weight:700;
+  padding:2px 10px;border-radius:100px;
+}
+.pattern-card.p1{border-top:2px solid #EC4899;}
+.pattern-card.p1 .p-score{background:rgba(236,72,153,0.15);color:#F9A8D4;}
+.pattern-card.p2{border-top:2px solid #F97316;}
+.pattern-card.p2 .p-score{background:rgba(249,115,22,0.15);color:#FDBA74;}
+.pattern-card.p3{border-top:2px solid #0EA5E9;}
+.pattern-card.p3 .p-score{background:rgba(14,165,233,0.15);color:#7DD3FC;}
+.pattern-card.p4{border-top:2px solid #14B8A6;}
+.pattern-card.p4 .p-score{background:rgba(20,184,166,0.15);color:#5EEAD4;}
+
+/* ── 練習計畫 ── */
+.plan-intro{
+  background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(249,115,22,0.07));
+  border:1px solid rgba(236,72,153,0.2);
+  border-radius:14px;padding:18px 20px;margin-bottom:22px;
+}
+.plan-intro h3{font-size:14px;color:#F9A8D4;margin-bottom:6px;}
+.plan-intro p{font-size:12px;color:#94A3B8;line-height:1.7;}
+
+.week-label{
+  display:flex;align-items:center;gap:10px;margin:22px 0 12px;
+}
+.week-badge{
+  background:var(--pink);color:#fff;
+  font-size:10px;font-weight:700;
+  padding:3px 12px;border-radius:100px;
+}
+.week-label h3{font-size:15px;color:#E2E8F0;}
+
+.day-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;margin-bottom:10px;overflow:hidden;
+  transition:border-color 0.2s;
+}
+.day-card:hover{border-color:rgba(236,72,153,0.3);}
+.day-header{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;cursor:pointer;
+  background:rgba(255,255,255,0.02);
+}
+.day-dot{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;flex-shrink:0;
+}
+.day-dot.t{background:rgba(236,72,153,0.2);color:#F9A8D4;border:1px solid rgba(236,72,153,0.35);}
+.day-dot.s{background:rgba(255,255,255,0.05);color:#64748B;border:1px solid rgba(255,255,255,0.1);}
+.day-info{flex:1;}
+.day-info .date{font-size:13px;font-weight:700;color:#E2E8F0;}
+.day-info .sub{font-size:11px;color:#64748B;margin-top:2px;}
+.day-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;}
+.day-tag.tt{background:rgba(236,72,153,0.15);color:#F9A8D4;border:1px solid rgba(236,72,153,0.25);}
+.day-tag.ss{background:rgba(255,255,255,0.04);color:#64748B;border:1px solid rgba(255,255,255,0.08);}
+.day-arrow{color:#64748B;font-size:12px;transition:transform 0.2s;}
+.day-card.open .day-arrow{transform:rotate(180deg);}
+.day-body{
+  display:none;padding:0 16px 14px;
+  border-top:1px solid rgba(255,255,255,0.04);
+}
+.day-card.open .day-body{display:block;}
+
+.task-list{margin-top:12px;display:flex;flex-direction:column;gap:7px;}
+.task-item{
+  display:flex;gap:9px;align-items:flex-start;
+  font-size:12px;color:#CBD5E1;line-height:1.6;
+}
+.task-num{
+  min-width:20px;height:20px;
+  background:rgba(236,72,153,0.15);color:#F9A8D4;
+  border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px;
+}
+.time-box{
+  margin-top:10px;
+  background:rgba(245,158,11,0.08);
+  border:1px solid rgba(245,158,11,0.2);
+  border-radius:8px;padding:9px 13px;
+  font-size:11px;color:#FDE68A;
+}
+.time-box strong{color:#F59E0B;}
+.warn-box{
+  margin-top:10px;
+  background:rgba(239,68,68,0.07);
+  border:1px solid rgba(239,68,68,0.2);
+  border-radius:8px;padding:9px 13px;
+  font-size:11px;color:#FCA5A5;
+}
+
+/* ── 時間管理 ── */
+.timeline{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;padding:20px;
+  margin-bottom:20px;
+}
+.timeline h4{font-size:13px;color:#94A3B8;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
+.tl-row{
+  display:flex;align-items:center;gap:0;
+  margin-bottom:8px;
+}
+.tl-label{font-size:11px;color:#94A3B8;width:90px;flex-shrink:0;text-align:right;padding-right:14px;}
+.tl-bar{
+  height:28px;border-radius:6px;
+  display:flex;align-items:center;padding:0 10px;
+  font-size:11px;font-weight:600;white-space:nowrap;
+}
+.tl-bar.c{background:rgba(20,184,166,0.2);color:#5EEAD4;border:1px solid rgba(20,184,166,0.3);}
+.tl-bar.d{background:rgba(14,165,233,0.2);color:#7DD3FC;border:1px solid rgba(14,165,233,0.3);}
+.tl-bar.p{background:rgba(236,72,153,0.2);color:#F9A8D4;border:1px solid rgba(236,72,153,0.3);}
+.tl-bar.f{background:rgba(249,115,22,0.2);color:#FDBA74;border:1px solid rgba(249,115,22,0.3);}
+
+/* ── 自我檢查 ── */
+.checklist{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;padding:18px;margin-top:20px;
+}
+.checklist h4{font-size:12px;color:#94A3B8;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+.check-item{
+  display:flex;gap:10px;align-items:center;
+  padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:12px;color:#CBD5E1;cursor:pointer;
+  transition:color 0.15s;
+}
+.check-item:last-child{border-bottom:none;}
+.check-item:hover{color:#fff;}
+.check-box{
+  width:20px;height:20px;
+  border:2px solid rgba(236,72,153,0.35);
+  border-radius:5px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;font-size:12px;
+}
+.check-item.ck .check-box{background:var(--pink);border-color:var(--pink);color:#fff;}
+.check-item.ck span{text-decoration:line-through;color:#4B5563;}
+
+/* ── 注意事項 ── */
+.rule-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+.rule-card{
+  border-radius:12px;padding:16px;border:1px solid;
+}
+.rule-card.ok{background:rgba(20,184,166,0.07);border-color:rgba(20,184,166,0.25);}
+.rule-card.no{background:rgba(239,68,68,0.07);border-color:rgba(239,68,68,0.25);}
+.rule-card h4{font-size:12px;font-weight:700;margin-bottom:8px;}
+.rule-card.ok h4{color:#5EEAD4;}
+.rule-card.no h4{color:#FCA5A5;}
+.rule-card ul{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.rule-card ul li{font-size:11px;display:flex;gap:6px;align-items:flex-start;line-height:1.5;}
+.rule-card.ok ul li{color:#99F6E4;}
+.rule-card.ok ul li::before{content:'✓';color:#14B8A6;flex-shrink:0;}
+.rule-card.no ul li{color:#FCA5A5;}
+.rule-card.no ul li::before{content:'✗';color:#EF4444;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🎨 電腦繪圖組</div>
+  <h1>國中甲組<span>靜態類</span>備賽資料</h1>
+  <p>得獎作品分析 × 練習計畫 × 時間管理 × 評分攻略</p>
+  <div class="hero-meta">
+    <span>📅 比賽日 <strong>3/17（二）09:00–12:00</strong></span>
+    <span>👥 參賽選手 <strong>4人</strong></span>
+    <span>🖥️ 軟體 <strong>Krita / Gimp / Inkscape</strong></span>
+    <span>📐 規格 <strong>1280×720 JPG/PNG</strong></span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showSection('analysis')">🏆 得獎作品分析</button>
+  <button class="nav-btn" onclick="showSection('score')">🎯 評分攻略</button>
+  <button class="nav-btn" onclick="showSection('plan')">📅 練習計畫</button>
+  <button class="nav-btn" onclick="showSection('rules')">⚠️ 比賽規則</button>
+</div>
+
+<!-- ══ 得獎作品分析 ══ -->
+<div id="analysis" class="section active">
+<div class="container">
+
+  <div class="analysis-intro">
+    <h3>📊 分析說明</h3>
+    <p>以下針對11張歷年特優得獎作品逐一分析，歸納出<strong style="color:#F9A8D4">風格、構圖、技法、主題</strong>四個維度的特徵。
+    讀完後你會發現：得特優的作品並不是「畫得最精細」，而是「主題清楚＋構圖有層次＋色彩協調」。
+    </p>
+  </div>
+
+  <div class="works-grid">
+
+    <!-- 作品1 廚房 -->
+    <div class="work-card">
+      <img src="/mnt/user-data/uploads/112年電腦繪圖國中甲組靜態類_特優_北區五權國中卓沛穎.jpg" class="work-thumb" alt="廚房">
+      <div class="work-body">
+        <div class="work-title">廚房烘焙場景（112年・五權國中）</div>
+        <div class="work-tags">
+          <span class="tag style">動漫風</span>
+          <span class="tag comp">多人物互動</span>
+          <span class="tag tech">室內透視</span>
+          <span class="tag theme">生活日常</span>
+        </div>
+        <ul class="work-lessons">
+          <li>雙主角動態感強，一個慌亂一個好奇，情緒對比明顯</li>
+          <li>背景廚具清晰但不搶主角，層次分明</li>
+          <li>左側蛋糕與右側角色形成視覺平衡</li>
+          <li>亮點效果（sparkle）增加畫面活潑感</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 作品2 畫室 -->
+    <div class="work-card">
+      <img src="/mnt/user-data/uploads/112年電腦繪圖國中甲組靜態類_特優_北區五權國中陳珏彤.jpg" class="work-thumb portrait" alt="畫室">
+      <div class="work-body">
+        <div class="work-title">藝術畫室場景（112年・五權國中）</div>
+        <div class="work-tags">
+          <span class="tag style">寫實插畫</span>
+          <span class="tag comp">前中後三層景</span>
+          <span class="tag tech">光影對比</span>
+          <span class="tag theme">藝術創作</span>
+        </div>
+        <ul class="work-lessons">
+          <li>豎版構圖（720×1280），主角在前景聚焦，背景組群虛化</li>
+          <li>鮮豔黃色主角在灰藍背景中非常突出</li>
+          <li>白描草稿感的背景人物是電腦技法的巧妙運用</li>
+          <li>色彩配置：暖色主角 vs 冷色背景，對比鮮明</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 作品3/5 MRT -->
+    <div class="work-card">
+      <img src="/mnt/user-data/uploads/111年電腦繪圖國中甲組靜態類_特優_北區五權國中張沐恩.jpg" class="work-thumb" alt="MRT">
+      <div class="work-body">
+        <div class="work-title">台中綠能MRT（111年・五權國中）</div>
+        <div class="work-tags">
+          <span class="tag style">動漫風</span>
+          <span class="tag comp">多人物城市</span>
+          <span class="tag tech">透視+光暈</span>
+          <span class="tag theme">公共運輸</span>
+        </div>
+        <ul class="work-lessons">
+          <li>主題與當年比賽題目高度吻合（大眾公共運輸）</li>
+          <li>捷運車廂佔畫面中上，人物在前景，層次清楚</li>
+          <li>黃綠色光暈烘托未來感，與綠能主題呼應</li>
+          <li>四個人物各有不同動作，避免單調</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 作品4/7 未來車廂 -->
+    <div class="work-card">
+      <img src="/mnt/user-data/uploads/111年電腦繪圖國中甲組靜態類_特優_北區五權國中陳亮辰.jpg" class="work-thumb" alt="未來車廂">
+      <div class="work-body">
+        <div class="work-title">未來透明車廂（111年・五權國中）</div>
+        <div class="work-tags">
+          <span class="tag style">科幻插畫</span>
+          <span class="tag comp">創意透視角</span>
+          <span class="tag tech">透明感材質</span>
+          <span class="tag theme">未來交通</span>
+        </div>
+        <ul class="work-lessons">
+          <li>構圖最大亮點：仰角透視，讓場景有空間縱深感</li>
+          <li>透明玻璃管中的縮小人物是原創性極高的創意</li>
+          <li>冷藍色調統一整體氛圍，非常協調</li>
+          <li>前景大角色＋中景玻璃管＋背景室內，三層次清晰</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 作品6 騎車少女 -->
+    <div class="work-card">
+      <img src="/mnt/user-data/uploads/111年電腦繪圖國中甲組靜態類_特優_太平區長億高中張伊紘.jpg" class="work-thumb" alt="騎車少女">
+      <div class="work-body">
+        <div class="work-title">未來城市騎車（111年・長億高中）</div>
+        <div class="work-tags">
+          <span class="tag style">動漫風</span>
+          <span class="tag comp">單人主角</span>
+          <span class="tag tech">色彩鮮豔飽和</span>
+          <span class="tag theme">綠色交通</span>
+        </div>
+        <ul class="work-lessons">
+          <li>單一主角策略：人物佔畫面1/3，視覺焦點集中</li>
+          <li>背景場景資訊豐富（飛碟、玻璃帷幕、老屋、水域）體現「新舊並存」</li>
+          <li>藍色頭髮是畫面中最鮮豔的點，立刻抓住目光</li>
+          <li>氣泡圓形裝飾讓畫面有空氣感</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 作品8 貼圖 -->
+    <div class="work-card">
+      <img src="/mnt/user-data/uploads/電腦繪圖國中甲組靜態類_特優_大雅區大雅國中張家甄_.jpg" class="work-thumb" alt="貼圖手機">
+      <div class="work-body">
+        <div class="work-title">YY新貼圖（大雅國中）</div>
+        <div class="work-tags">
+          <span class="tag style">Q版可愛風</span>
+          <span class="tag comp">創意構圖</span>
+          <span class="tag tech">半格漫畫版型</span>
+          <span class="tag theme">數位生活</span>
+        </div>
+        <ul class="work-lessons">
+          <li>構圖最創新：模擬手機截圖視角，原創性最高</li>
+          <li>6個Q版角色各有個性，表情豐富生動</li>
+          <li>手持手機的手讓畫面有「第四道牆」打破感</li>
+          <li>深灰底色讓角色顏色更突出，配色策略聰明</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 作品9 魔法少女 -->
+    <div class="work-card">
+      <img src="/mnt/user-data/uploads/電腦繪圖國中甲組靜態類_特優_后里區后綜高中王筱榕.jpg" class="work-thumb" alt="魔法少女">
+      <div class="work-body">
+        <div class="work-title">魔法光芒特寫（后綜高中）</div>
+        <div class="work-tags">
+          <span class="tag style">特效強化</span>
+          <span class="tag comp">單人特寫</span>
+          <span class="tag tech">光線發光效果</span>
+          <span class="tag theme">奇幻魔法</span>
+        </div>
+        <ul class="work-lessons">
+          <li>大膽選擇「人物特寫」，不依賴複雜背景</li>
+          <li>青綠色光線特效佔滿畫面，電腦技法分數極高</li>
+          <li>表情刻畫細膩（驚愕感），情緒傳達清楚</li>
+          <li>兩手向前伸出的動態構圖，有強烈的空間感</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 作品10 競技場 -->
+    <div class="work-card">
+      <img src="/mnt/user-data/uploads/電腦繪圖國中甲組靜態類_特優_南屯區大業國中吳倍宇.png" class="work-thumb" alt="競技場">
+      <div class="work-body">
+        <div class="work-title">競技表演場（大業國中）</div>
+        <div class="work-tags">
+          <span class="tag style">動漫混合白描</span>
+          <span class="tag comp">雙主角動態</span>
+          <span class="tag tech">彩繪+線稿對比</span>
+          <span class="tag theme">表演藝術</span>
+        </div>
+        <ul class="work-lessons">
+          <li>技法最特別：背景用白色線稿，主角用全彩，對比強烈</li>
+          <li>兩個主角動作誇張（跳躍＋傾身），動態感十足</li>
+          <li>藍紫漸層背景簡潔但有層次</li>
+          <li>左下角白描競技場建立場景脈絡，不佔太多空間</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 作品11 縮小人 -->
+    <div class="work-card">
+      <img src="/mnt/user-data/uploads/電腦繪圖國中甲組靜態類_特優_北屯區東山高中黃麗玲.jpg" class="work-thumb" alt="縮小人">
+      <div class="work-body">
+        <div class="work-title">縮小人的世界（東山高中）</div>
+        <div class="work-tags">
+          <span class="tag style">奇幻插畫</span>
+          <span class="tag comp">物件比例反差</span>
+          <span class="tag tech">多層次場景</span>
+          <span class="tag theme">奇幻日常</span>
+        </div>
+        <ul class="work-lessons">
+          <li>最具創意的構圖：放大日常物品（書、尺、蘋果）讓微小人物生活其中</li>
+          <li>資訊量最豐富：至少8個人物、10種物品，卻不混亂</li>
+          <li>大地色系（草地棕＋草地綠）統一整體，避免顏色太雜</li>
+          <li>巨大手持人偶的特寫是視覺入口，引導觀看動線</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 共同規律 -->
+  <h3 style="font-size:15px;color:#F9A8D4;margin-bottom:14px;">📌 11張得獎作品的共同規律</h3>
+  <div class="pattern-grid">
+    <div class="pattern-card p1">
+      <div class="p-icon">🎯</div>
+      <h4>主題一眼看懂</h4>
+      <p>每張圖你在3秒內就知道「在講什麼」。主題要明確，不要讓評審猜謎。</p>
+      <span class="p-score">對應：主題性 25%</span>
+    </div>
+    <div class="pattern-card p2">
+      <div class="p-icon">💡</div>
+      <h4>構圖有一個創意點</h4>
+      <p>或是視角特別（仰角/截圖視角），或是比例反差（縮小人），或是技法對比（白描＋彩繪）。每張圖都有「只有這張才有」的東西。</p>
+      <span class="p-score">對應：原創性 30%</span>
+    </div>
+    <div class="pattern-card p3">
+      <div class="p-icon">🎨</div>
+      <h4>有前景、中景、背景</h4>
+      <p>所有得獎作品都有層次感。不是把人物放在空白背景上——背景有場景，中景有細節，前景有主角。</p>
+      <span class="p-score">對應：電腦技法 30%</span>
+    </div>
+    <div class="pattern-card p4">
+      <div class="p-icon">🖌️</div>
+      <h4>顏色有主色調</h4>
+      <p>不是「五顏六色」，而是有1-2個主色統領全圖（藍色系、暖棕色、青綠色）。主色決定畫面氣氛。</p>
+      <span class="p-score">對應：美術技法 15%</span>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ 評分攻略 ══ -->
+<div id="score" class="section">
+<div class="container">
+
+  <div class="score-hero">
+    <div class="score-pill a">
+      <div class="pct">30%</div>
+      <div class="label">原創性</div>
+      <div class="tip">構圖創意<br>概念是否有新意</div>
+    </div>
+    <div class="score-pill b">
+      <div class="pct">30%</div>
+      <div class="label">電腦技法</div>
+      <div class="tip">軟體功能運用<br>光影特效品質</div>
+    </div>
+    <div class="score-pill c">
+      <div class="pct">25%</div>
+      <div class="label">主題性</div>
+      <div class="tip">主題清楚<br>與題目的關聯</div>
+    </div>
+    <div class="score-pill d">
+      <div class="pct">15%</div>
+      <div class="label">美術技法</div>
+      <div class="tip">色彩協調<br>線條美觀</div>
+    </div>
+  </div>
+
+  <!-- 時間管理 -->
+  <div class="timeline">
+    <h4>⏱️ 比賽3小時建議時間分配（09:00–12:00）</h4>
+    <div class="tl-row">
+      <div class="tl-label">09:00–09:15</div>
+      <div class="tl-bar c" style="width:15%">構思草稿 15分</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-label">09:15–09:35</div>
+      <div class="tl-bar d" style="width:20%">線稿打稿 20分</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-label">09:35–10:50</div>
+      <div class="tl-bar p" style="width:75%">上色+主要細節 75分</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-label">10:50–11:30</div>
+      <div class="tl-bar f" style="width:50%">背景+特效+調整 40分</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-label">11:30–11:50</div>
+      <div class="tl-bar c" style="width:20%">整體修飾 20分</div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-label">11:50–12:00</div>
+      <div class="tl-bar d" style="width:10%">輸出上傳 10分</div>
+    </div>
+    <p style="font-size:11px;color:#64748B;margin-top:12px;">⚠️ 絕對不能讓上傳時間不夠——11:50前必須完成作品</p>
+  </div>
+
+  <!-- 比賽當天自我檢查 -->
+  <div class="checklist">
+    <h4>✅ 比賽當天自我檢查清單</h4>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>新增畫布時確認尺寸：1280×720 pixel（或720×1280）</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>構思時想好「這張圖的一個創意點是什麼」</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>草稿時確認有前景、中景、背景三個層次</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>選定主色調（1–2個主色），全圖統一</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>畫面中沒有出現姓名或學校名稱</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>所有素材都是自己畫的（沒有使用現成圖片）</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>完成後存成 JPG 或 PNG 格式</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>上傳時勾選「同意創用CC授權」</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>確認成功上傳，截圖存證</span></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ 練習計畫 ══ -->
+<div id="plan" class="section">
+<div class="container">
+
+  <div class="plan-intro">
+    <h3>🎯 繪圖組訓練策略</h3>
+    <p>
+      比賽時題目現場公布，考驗的是「快速構思 → 轉化為畫面 → 在時間內完成」的能力。
+      練習重點是訓練<strong style="color:#F9A8D4">每次都用相同的五步驟流程</strong>：
+      構思（想創意點）→ 草稿（確認層次）→ 線稿→ 上色 → 特效收尾。
+      每次練習都要嚴格計時，養成時間感。
+    </p>
+  </div>
+
+  <div class="week-label">
+    <span class="week-badge">第一週</span>
+    <h3>3/5（三）～ 3/9（日）　找到自己的風格</h3>
+  </div>
+
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <div class="day-dot t">3/5</div>
+      <div class="day-info">
+        <div class="date">週三・老師在場</div>
+        <div class="sub">帳號測試 + 看得獎作品分析</div>
+      </div>
+      <span class="day-tag tt">✅ 師帶</span>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="task-list">
+        <div class="task-item"><div class="task-num">1</div><span>4人各自登入平台，完成測試上傳（傳任意一張圖），截圖確認</span></div>
+        <div class="task-item"><div class="task-num">2</div><span>老師帶著看本頁的「得獎作品分析」，討論每張圖的創意點在哪裡</span></div>
+        <div class="task-item"><div class="task-num">3</div><span>確認軟體：各自開啟 Krita，確認介面正常、筆刷可用</span></div>
+        <div class="task-item"><div class="task-num">4</div><span>今天任務：在Krita上限時15分鐘，畫一個任意主題的草稿（不用完成）</span></div>
+      </div>
+      <div class="warn-box">⚠️ 測試上傳今天必須完成！4人全部要截圖給老師確認。</div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <div class="day-dot t">3/6</div>
+      <div class="day-info">
+        <div class="date">週四・老師在場</div>
+        <div class="sub">第一次限時練習：「日常生活場景」</div>
+      </div>
+      <span class="day-tag tt">✅ 師帶</span>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="task-list">
+        <div class="task-item"><div class="task-num">1</div><span>老師出題：「畫一個你熟悉的日常場景」（如學校、家裡、便利商店）</span></div>
+        <div class="task-item"><div class="task-num">2</div><span>先花 <strong>3分鐘</strong> 在紙上速寫構圖草稿（確認前中後景）</span></div>
+        <div class="task-item"><div class="task-num">3</div><span>剩下 <strong>20分鐘</strong> 在Krita上完成（盡力完成，不求完美）</span></div>
+        <div class="task-item"><div class="task-num">4</div><span>老師重點觀察：有沒有三個層次？顏色有沒有主色調？</span></div>
+      </div>
+      <div class="time-box">⏱️ <strong>計時練習很重要</strong>——比賽3小時，今天練習20分鐘是在練「快速決策」的能力</div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <div class="day-dot s">3/7</div>
+      <div class="day-info">
+        <div class="date">週五・自主練習</div>
+        <div class="sub">把昨天的作品加上特效，研究Krita工具</div>
+      </div>
+      <span class="day-tag ss">自主</span>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="task-list">
+        <div class="task-item"><div class="task-num">1</div><span>打開昨天的作品，嘗試加入：光暈效果、發光筆刷、或漸層背景</span></div>
+        <div class="task-item"><div class="task-num">2</div><span>練習Krita「圖層混合模式」：試試Screen、Multiply、Overlay的效果</span></div>
+        <div class="task-item"><div class="task-num">3</div><span>完成後輸出成JPG，確認畫質與大小</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <div class="day-dot s">3/10</div>
+      <div class="day-info">
+        <div class="date">週一・自主練習</div>
+        <div class="sub">新題目：「未來城市/科技場景」</div>
+      </div>
+      <span class="day-tag ss">自主</span>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="task-list">
+        <div class="task-item"><div class="task-num">1</div><span>限時20分鐘，畫一個未來感的場景（任何你想像的未來交通/城市）</span></div>
+        <div class="task-item"><div class="task-num">2</div><span>這次的目標：<strong>決定一個你的創意點</strong>（特別的視角？比例反差？技法對比？）</span></div>
+        <div class="task-item"><div class="task-num">3</div><span>畫完後自問：「這張圖只有我才會這樣畫的地方是什麼？」</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="week-label">
+    <span class="week-badge">第二週</span>
+    <h3>3/11（二）～ 3/16（日）　模擬實戰衝刺</h3>
+  </div>
+
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <div class="day-dot t">3/11</div>
+      <div class="day-info">
+        <div class="date">週二・老師在場</div>
+        <div class="sub">互相觀摩 + 老師給回饋</div>
+      </div>
+      <span class="day-tag tt">✅ 師帶</span>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="task-list">
+        <div class="task-item"><div class="task-num">1</div><span>4人各自展示這週練習的作品，互相指出一個優點、一個改善點</span></div>
+        <div class="task-item"><div class="task-num">2</div><span>老師用評分標準（原創30、電腦技法30、主題25、美術15）逐一分析</span></div>
+        <div class="task-item"><div class="task-num">3</div><span>討論各自最強的風格是什麼：動漫？寫實？Q版？未來感？確定自己的方向</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <div class="day-dot t">3/12</div>
+      <div class="day-info">
+        <div class="date">週三・老師在場</div>
+        <div class="sub">🔥 完整模擬實戰（限時20分鐘）</div>
+      </div>
+      <span class="day-tag tt">✅ 師帶</span>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="task-list">
+        <div class="task-item"><div class="task-num">1</div><span>老師現場出題（學生不知道），宣布後立刻開始計時 <strong>20分鐘</strong></span></div>
+        <div class="task-item"><div class="task-num">2</div><span>完全模擬比賽節奏：草稿3分鐘 → 線稿5分鐘 → 上色10分鐘 → 特效2分鐘</span></div>
+        <div class="task-item"><div class="task-num">3</div><span>時間到，老師當場評分並回饋</span></div>
+      </div>
+      <div class="time-box">🔥 <strong>最重要的練習</strong>——體驗「時間壓力下做決策」的感覺，比賽當天才不會慌</div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <div class="day-dot t">3/13</div>
+      <div class="day-info">
+        <div class="date">週四・老師在場</div>
+        <div class="sub">針對昨天弱點補強</div>
+      </div>
+      <span class="day-tag tt">✅ 師帶</span>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="task-list">
+        <div class="task-item"><div class="task-num">1</div><span>根據昨天模擬的問題，今天重點練最弱的地方（背景？特效？還是速度太慢？）</span></div>
+        <div class="task-item"><div class="task-num">2</div><span>練習「快速打稿」：2分鐘內在紙上畫出3個不同的構圖草案，選最好的</span></div>
+        <div class="task-item"><div class="task-num">3</div><span>最後確認輸出流程：Krita存檔 → 匯出JPG → 確認大小</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <div class="day-dot s">3/14</div>
+      <div class="day-info">
+        <div class="date">週五・自主練習</div>
+        <div class="sub">輕度維持，練最拿手的風格</div>
+      </div>
+      <span class="day-tag ss">自主</span>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="task-list">
+        <div class="task-item"><div class="task-num">1</div><span>畫一張自己最喜歡、最拿手的題材（不限題目，隨心發揮），限時20分鐘</span></div>
+        <div class="task-item"><div class="task-num">2</div><span>目標：保持信心與手感，不過度練習</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-card" onclick="toggleDay(this)">
+    <div class="day-header">
+      <div class="day-dot s">3/16</div>
+      <div class="day-info">
+        <div class="date">週日・比賽前一天</div>
+        <div class="sub">休息 + 確認帳號 + 準備設備</div>
+      </div>
+      <span class="day-tag ss">準備日</span>
+      <span class="day-arrow">▼</span>
+    </div>
+    <div class="day-body">
+      <div class="task-list">
+        <div class="task-item"><div class="task-num">1</div><span>最後一次登入平台確認帳號密碼正常</span></div>
+        <div class="task-item"><div class="task-num">2</div><span>如果自備繪圖板：確認驅動程式正常，比賽前30分鐘可以安裝</span></div>
+        <div class="task-item"><div class="task-num">3</div><span>早點休息，手不要過度使用——比賽當天手要靈活！</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ 比賽規則 ══ -->
+<div id="rules" class="section">
+<div class="container">
+
+  <div class="rule-grid">
+    <div class="rule-card ok">
+      <h4>✅ 可以做的事</h4>
+      <ul>
+        <li>使用 Krita、Gimp、Inkscape 或作業系統內建繪圖軟體</li>
+        <li>使用滑鼠、繪圖筆、繪圖板（一般型）</li>
+        <li>完全自己繪製所有元素</li>
+        <li>比賽前30分鐘安裝繪圖板驅動程式</li>
+        <li>輸出 JPG 或 PNG 格式</li>
+        <li>上傳時勾選創用CC授權</li>
+      </ul>
+    </div>
+    <div class="rule-card no">
+      <h4>⛔ 絕對禁止的事</h4>
+      <ul>
+        <li>使用現成圖片（含網路圖、圖庫光碟、軟體內建百寶箱）</li>
+        <li>使用掃描器或數位相機取得的圖片</li>
+        <li>使用「內建螢幕的數位繪圖板」（iPad等）</li>
+        <li>畫面中出現姓名或學校名稱</li>
+        <li>上網搜尋參考圖（比賽場地不提供對外網路）</li>
+        <li>檔案超過規定尺寸（需符合 1280×720 或 720×1280）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-radius:12px;padding:18px;margin-top:16px;">
+    <h4 style="color:#FCD34D;font-size:13px;margin-bottom:10px;">📋 比賽當天帳號</h4>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;">
+      <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:12px;">
+        <div style="color:#94A3B8;margin-bottom:4px;">彭祈恩（708-24）</div>
+        <div style="color:#FCD34D;">帳號：<code style="font-family:monospace">7vqkwsgj</code></div>
+        <div style="color:#FCD34D;">密碼：<code style="font-family:monospace">rhwn66</code></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:12px;">
+        <div style="color:#94A3B8;margin-bottom:4px;">廖若妍（706-24）</div>
+        <div style="color:#FCD34D;">帳號：<code style="font-family:monospace">qccvyksc</code></div>
+        <div style="color:#FCD34D;">密碼：<code style="font-family:monospace">xbh9w2</code></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:12px;">
+        <div style="color:#94A3B8;margin-bottom:4px;">黃品閑（808-23）</div>
+        <div style="color:#FCD34D;">帳號：<code style="font-family:monospace">fcsz3jx2</code></div>
+        <div style="color:#FCD34D;">密碼：<code style="font-family:monospace">w5db8p</code></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:12px;">
+        <div style="color:#94A3B8;margin-bottom:4px;">蔡旻芯（808-24）</div>
+        <div style="color:#FCD34D;">帳號：<code style="font-family:monospace">j8u58hkz</code></div>
+        <div style="color:#FCD34D;">密碼：<code style="font-family:monospace">dfwbw6</code></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+function toggleDay(card) { card.classList.toggle('open'); }
+function toggleCheck(item) {
+  item.classList.toggle('ck');
+  item.querySelector('.check-box').textContent = item.classList.contains('ck') ? '✓' : '';
+}
+document.querySelector('.day-card').classList.add('open');
+</script>
+</body>
+</html>
