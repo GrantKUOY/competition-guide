@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模擬練習題 | 115年度資訊應用競賽</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080F;
+  --s1:#0D1020;
+  --s2:#141828;
+  --border:rgba(255,255,255,0.07);
+  --slides:#C084FC;
+  --drawing:#34D399;
+  --scratch:#F59E0B;
+  --text:#E2E8F0;
+  --muted:#64748B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 120% 60% at 20% 0%,rgba(192,132,252,.05),transparent 60%),
+             radial-gradient(ellipse 80% 60% at 80% 100%,rgba(52,211,153,.04),transparent 60%);
+}
+
+/* NAV */
+.topnav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(7,8,15,.9);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:0;padding:0 1.5rem;
+}
+.back-btn{
+  color:var(--muted);text-decoration:none;font-size:.82rem;
+  padding:.9rem 1rem .9rem 0;margin-right:1.5rem;
+  border-right:1px solid var(--border);display:flex;align-items:center;gap:.3rem;transition:color .2s;
+}
+.back-btn:hover{color:white}
+.nav-tabs{display:flex}
+.nav-tab{
+  padding:.9rem 1.4rem;font-size:.88rem;font-weight:700;
+  color:var(--muted);cursor:pointer;border:none;background:none;
+  border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;
+}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active-slides{color:var(--slides);border-bottom-color:var(--slides)}
+.nav-tab.active-drawing{color:var(--drawing);border-bottom-color:var(--drawing)}
+.nav-tab.active-scratch{color:var(--scratch);border-bottom-color:var(--scratch)}
+
+/* HERO */
+.hero{
+  position:relative;z-index:1;
+  padding:2.5rem 1.5rem 2rem;text-align:center;
+  border-bottom:1px solid var(--border);
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  border:1px solid rgba(255,255,255,.1);border-radius:999px;
+  padding:.3rem 1rem;font-size:.75rem;color:var(--muted);margin-bottom:.8rem;
+}
+.hero h1{
+  font-family:'Oswald',sans-serif;font-size:clamp(1.5rem,4vw,2.2rem);
+  font-weight:700;color:white;letter-spacing:.03em;margin-bottom:.4rem;
+}
+.hero-sub{font-size:.88rem;color:var(--muted)}
+
+/* MAIN */
+main{position:relative;z-index:1;max-width:840px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.panel{display:none}
+.panel.active{display:block;animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* GROUP HEADER */
+.grp-header{
+  display:flex;align-items:center;gap:1rem;
+  padding:1.2rem 1.4rem;border-radius:14px;
+  border:1px solid var(--border);background:var(--s1);margin-bottom:1.5rem;
+}
+.grp-icon{font-size:2rem}
+.grp-name{font-size:1.1rem;font-weight:900;color:white;margin-bottom:.25rem}
+.grp-meta{display:flex;flex-wrap:wrap;gap:.4rem}
+.chip{padding:.2rem .6rem;border-radius:6px;font-size:.72rem;font-weight:700}
+
+/* QUESTION */
+.q-block{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:14px;margin-bottom:1rem;
+}
+.q-head{
+  display:flex;align-items:center;gap:.7rem;
+  padding:.9rem 1.2rem;border-bottom:1px solid var(--border);
+  cursor:pointer;user-select:none;
+}
+.q-head:hover{background:rgba(255,255,255,.02)}
+.q-num{
+  width:26px;height:26px;border-radius:7px;
+  font-size:.78rem;font-weight:900;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.q-label{font-size:.95rem;font-weight:700;color:white;flex:1}
+.q-src{font-size:.72rem;color:var(--muted);white-space:nowrap}
+.q-arrow{color:var(--muted);transition:transform .2s;font-size:.8rem}
+.q-block.open .q-arrow{transform:rotate(180deg)}
+.q-body{display:none;padding:1.2rem 1.4rem}
+.q-block.open .q-body{display:block}
+
+/* TOPIC */
+.topic{
+  font-size:1.15rem;font-weight:900;color:white;
+  margin-bottom:.7rem;line-height:1.4;
+}
+.scenario{
+  background:var(--s2);border-radius:10px;
+  padding:.9rem 1.1rem;margin-bottom:1rem;
+  font-size:.88rem;line-height:1.85;color:#b8c5d6;
+  border-left:3px solid rgba(255,255,255,.1);
+}
+.scenario b{color:white}
+
+/* REQUIREMENTS */
+.section-label{font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.08em;margin-bottom:.5rem}
+.req-list{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.req-item{display:flex;align-items:flex-start;gap:.55rem;font-size:.86rem;line-height:1.6}
+.dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:.6rem}
+
+/* TIPS */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.6rem;margin-bottom:1rem}
+.tip{background:var(--s2);border-radius:10px;padding:.8rem 1rem;border:1px solid var(--border);font-size:.82rem;line-height:1.55}
+.tip-label{font-size:.7rem;font-weight:700;letter-spacing:.07em;margin-bottom:.25rem}
+
+/* BLOCKS (Scratch) */
+.blocks{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1rem}
+.blk{
+  display:flex;align-items:flex-start;gap:.6rem;
+  background:var(--s2);border-radius:8px;padding:.6rem .9rem;font-size:.84rem;line-height:1.55;
+}
+.blk-icon{
+  width:26px;height:26px;border-radius:6px;flex-shrink:0;margin-top:.05rem;
+  display:flex;align-items:center;justify-content:center;font-size:.75rem;
+}
+
+/* COLORS */
+.c-slides{color:var(--slides)}
+.c-drawing{color:var(--drawing)}
+.c-scratch{color:var(--scratch)}
+.chip-slides{background:rgba(192,132,252,.15);color:var(--slides);border:1px solid rgba(192,132,252,.25)}
+.chip-drawing{background:rgba(52,211,153,.15);color:var(--drawing);border:1px solid rgba(52,211,153,.25)}
+.chip-scratch{background:rgba(245,158,11,.15);color:var(--scratch);border:1px solid rgba(245,158,11,.25)}
+.num-slides{background:rgba(192,132,252,.2);color:var(--slides)}
+.num-drawing{background:rgba(52,211,153,.2);color:var(--drawing)}
+.num-scratch{background:rgba(245,158,11,.2);color:var(--scratch)}
+.dot-slides{background:var(--slides)}
+.dot-drawing{background:var(--drawing)}
+.dot-scratch{background:var(--scratch)}
+
+@media(max-width:600px){main{padding:1rem 1rem 3rem}.nav-tab{padding:.8rem .8rem;font-size:.8rem}}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="back-btn" href="index.html">← 返回</a>
+  <div class="nav-tabs">
+    <button class="nav-tab active-slides" id="tab-slides" onclick="show('slides')">📊 簡報組</button>
+    <button class="nav-tab" id="tab-drawing" onclick="show('drawing')">🎨 繪圖組</button>
+    <button class="nav-tab" id="tab-scratch" onclick="show('scratch')">🐱 Scratch 組</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">🏆 115年度台中市資訊應用競賽 ｜ 模擬練習題</div>
+  <h1>仿真模擬題組</h1>
+  <div class="hero-sub">整合台中市、台南市、桃園市、雲林縣歷屆題型設計</div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════
+     簡報組
+═══════════════════════════ -->
+<div class="panel active" id="panel-slides">
+  <div class="grp-header" style="border-color:rgba(192,132,252,.2);background:rgba(192,132,252,.05)">
+    <div class="grp-icon">📊</div>
+    <div>
+      <div class="grp-name c-slides">專題簡報組</div>
+      <div class="grp-meta">
+        <span class="chip chip-slides">LibreOffice Impress</span>
+        <span class="chip chip-slides">⏱️ 3小時</span>
+        <span class="chip chip-slides">📄 存 .odp 上傳</span>
+        <span class="chip chip-slides">👥 2人一組</span>
+        <span class="chip chip-slides">🎯 目標 27–30頁</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 題目一 -->
+  <div class="q-block open" id="s1">
+    <div class="q-head" onclick="toggle('s1')">
+      <div class="q-num num-slides">一</div>
+      <div class="q-label">網路世界停看聽——辨別假訊息，做個清醒的數位公民</div>
+      <div class="q-src">仿台中市115年 × 雲林縣</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="q-body">
+      <div class="topic">🌐 網路世界停看聽</div>
+      <div class="scenario">
+        每天滑手機，你是否曾懷疑過某則新聞是假的？<b>假訊息（Fake News）</b>已成為現代最嚴重的資訊危機之一。<br><br>
+        請以「網路世界停看聽」為題，製作一份完整專題簡報，說明假訊息的成因與危害，並提出辨識方法與因應對策，讓更多人成為有判斷力的數位公民。
+      </div>
+
+      <div class="section-label">必要內容（對應 35% 資料結構分）</div>
+      <div class="req-list">
+        <div class="req-item"><div class="dot dot-slides"></div>封面：主題標題 + 視覺圖 + 創用CC授權（左下角，5分直接送）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>目錄：五個章節 + 超連結跳頁；每頁右上角「回目錄」按鈕</div>
+        <div class="req-item"><div class="dot dot-slides"></div>主題一：什麼是假訊息？（定義 + 3種常見類型）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>主題二：假訊息如何傳播？（社群媒體演算法 + 同溫層效應）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>主題三：我們能怎麼做？（查核工具 + 停看聽三步驟）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>結語：1段行動呼籲，回應前言</div>
+        <div class="req-item"><div class="dot" style="background:#ef4444"></div><b style="color:#fca5a5">⭐ 資料來源（必填！影響35%）</b>——每筆資料一一列出</div>
+      </div>
+
+      <div class="section-label">得分策略</div>
+      <div class="tips">
+        <div class="tip"><div class="tip-label c-slides">版面 25%</div>每頁圖片≥60%，標題≥36pt，正文≤50字，不貼大段文字</div>
+        <div class="tip"><div class="tip-label c-slides">手法 5%</div>用數字放大法（把關鍵數字放到80pt）或比較表格，不要純文字</div>
+        <div class="tip"><div class="tip-label c-slides">配色 5%</div>全簡報最多2–3色，各章節用不同強調色，視覺有層次</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 題目二 -->
+  <div class="q-block" id="s2">
+    <div class="q-head" onclick="toggle('s2')">
+      <div class="q-num num-slides">二</div>
+      <div class="q-label">大眾公共運輸——讓城市更友善，讓地球更永續</div>
+      <div class="q-src">仿桃園市 × 台中市歷屆</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="q-body">
+      <div class="topic">🚇 大眾公共運輸</div>
+      <div class="scenario">
+        台灣的大眾運輸系統近年快速發展，從捷運到公車、YouBike到台灣高鐵，每一種交通方式都影響著日常生活。<br><br>
+        請製作一份完整專題簡報，說明<b>大眾公共運輸的現況、優點、挑戰與未來發展</b>，並提出鼓勵大家多搭大眾運輸的具體建議。
+      </div>
+
+      <div class="section-label">必要內容</div>
+      <div class="req-list">
+        <div class="req-item"><div class="dot dot-slides"></div>封面 + 目錄（超連結）+ 前言</div>
+        <div class="req-item"><div class="dot dot-slides"></div>主題一：台灣大眾運輸種類與特色（捷運/公車/高鐵/公共單車）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>主題二：搭大眾運輸的好處（環境 + 交通 + 健康 + 經濟）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>主題三：現有挑戰 + 未來智慧運輸（MaaS概念）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>結語 + 行動呼籲</div>
+        <div class="req-item"><div class="dot" style="background:#ef4444"></div><b style="color:#fca5a5">⭐ 資料來源（必填！）</b></div>
+      </div>
+
+      <div class="section-label">進階挑戰</div>
+      <div class="tips">
+        <div class="tip"><div class="tip-label c-slides">挑戰①</div>主題二製作「各交通工具CO₂排放比較表格」</div>
+        <div class="tip"><div class="tip-label c-slides">挑戰②</div>主題三做一頁數字強調頁：最震撼的數據放大到80pt</div>
+        <div class="tip"><div class="tip-label c-slides">挑戰③</div>封面用全版圖片背景，標題加半透明色塊壓在圖上</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 題目三 -->
+  <div class="q-block" id="s3">
+    <div class="q-head" onclick="toggle('s3')">
+      <div class="q-num num-slides">三</div>
+      <div class="q-label">珍愛生命，拒絕毒品——反毒從我做起</div>
+      <div class="q-src">仿台中市歷屆 × 台南市</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="q-body">
+      <div class="topic">🚫 反毒你我他</div>
+      <div class="scenario">
+        毒品問題影響個人、家庭與社會，青少年是最需要被守護的族群。<br><br>
+        請製作一份完整專題簡報，介紹<b>毒品種類、危害、成癮原因</b>，以及青少年可以採取的<b>拒毒策略</b>，最後提出真實案例與反思。
+      </div>
+
+      <div class="section-label">必要內容</div>
+      <div class="req-list">
+        <div class="req-item"><div class="dot dot-slides"></div>封面 + 目錄 + 前言：為什麼要認識毒品</div>
+        <div class="req-item"><div class="dot dot-slides"></div>主題一：毒品種類與分級（一~四級，各有代表物）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>主題二：毒品對身心的危害（短期/長期，圖表呈現）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>主題三：如何拒絕？（5種拒絕技巧 + 遠離情境）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>真實案例分析（1–2個）</div>
+        <div class="req-item"><div class="dot dot-slides"></div>結語 + 資料來源</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════
+     繪圖組
+═══════════════════════════ -->
+<div class="panel" id="panel-drawing">
+  <div class="grp-header" style="border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.05)">
+    <div class="grp-icon">🎨</div>
+    <div>
+      <div class="grp-name c-drawing">電腦繪圖組（靜態類）</div>
+      <div class="grp-meta">
+        <span class="chip chip-drawing">Krita / GIMP / Inkscape</span>
+        <span class="chip chip-drawing">⏱️ 3小時</span>
+        <span class="chip chip-drawing">📐 1280×720 JPG/PNG</span>
+        <span class="chip chip-drawing">👤 個人競賽</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 繪圖一 -->
+  <div class="q-block open" id="d1">
+    <div class="q-head" onclick="toggle('d1')">
+      <div class="q-num num-drawing">一</div>
+      <div class="q-label">我的永續家園——2050年的台中生活場景</div>
+      <div class="q-src">仿台南市 × 桃園市歷屆</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="q-body">
+      <div class="topic">🌏 2050年台中永續生活場景</div>
+      <div class="scenario">
+        2050年，台中市已實現碳中和。<b>風力渦輪、太陽能板、空中農園、綠色捷運</b>……城市與自然和諧共存。<br><br>
+        請畫出你想像中的<b>2050年台中生活場景</b>，可以是街道、公園、交通、學校或家庭角落。畫面中需有<b>至少2個人物</b>，呈現人與永續環境互動的日常。
+      </div>
+
+      <div class="section-label">必要元素</div>
+      <div class="req-list">
+        <div class="req-item"><div class="dot dot-drawing"></div>畫面尺寸：1280×720像素（橫式）</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>人物：至少2個，動作各不同（不要只站立）</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>前景／中景／背景：三層次清楚</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>永續元素：至少3種（太陽能、綠建築、單車、植物牆等）</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>主視覺角色在前景，背景適當虛化</div>
+      </div>
+
+      <div class="section-label">得分策略（參考歷屆評審重點）</div>
+      <div class="tips">
+        <div class="tip"><div class="tip-label c-drawing">光影 +分</div>加光暈或發光效果（sparkle），讓畫面更有層次感</div>
+        <div class="tip"><div class="tip-label c-drawing">配色 +分</div>暖色主角 × 冷色背景，互補色對比，視覺強烈</div>
+        <div class="tip"><div class="tip-label c-drawing">主題 +分</div>永續議題與當年SDGs熱門主題高度吻合，評審印象深</div>
+      </div>
+
+      <div class="section-label">⏰ 3小時分配建議</div>
+      <div class="blocks">
+        <div class="blk"><div class="blk-icon" style="background:rgba(52,211,153,.15)">📝</div>09:00–09:30｜草稿：構圖、人物位置、主題元素安排</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(52,211,153,.15)">🖌️</div>09:30–11:00｜主體繪製：前景人物 + 中景建築與環境</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(52,211,153,.15)">🌅</div>11:00–11:40｜背景完成 + 整體光影調整</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">💾</div>11:40–12:00｜匯出JPG/PNG，確認1280×720，上傳截圖確認</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 繪圖二 -->
+  <div class="q-block" id="d2">
+    <div class="q-head" onclick="toggle('d2')">
+      <div class="q-num num-drawing">二</div>
+      <div class="q-label">未來職人——2035年，我夢想的工作現場</div>
+      <div class="q-src">仿台中市112年決賽 × 台南市</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="q-body">
+      <div class="topic">🦸 2035年未來職人工作現場</div>
+      <div class="scenario">
+        AI浪潮席捲全球，未來的工作會長什麼樣子？無人機送貨員、AI醫師助理、太空農場工程師……<br><br>
+        請畫出<b>你想像中2035年的某個工作現場</b>，展示主角在工作時的樣貌，搭配充滿科技感的環境。<b>人物表情要生動</b>，讓觀者感受到對工作的熱情。
+      </div>
+
+      <div class="section-label">必要元素</div>
+      <div class="req-list">
+        <div class="req-item"><div class="dot dot-drawing"></div>主角人物1位：表情生動，職業特徵明確（工具/服裝/配件）</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>背景符合職業環境（太空站、海底、空中農場等）</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>科技感元素：至少2個（螢幕、機器人、無人機等）</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>前中後景三層次明確，整體色調統一</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 繪圖三 -->
+  <div class="q-block" id="d3">
+    <div class="q-head" onclick="toggle('d3')">
+      <div class="q-num num-drawing">三</div>
+      <div class="q-label">五十年後的我——2075年的生活樣貌</div>
+      <div class="q-src">仿台中市109年決賽題</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="q-body">
+      <div class="topic">⏰ 五十年後的我</div>
+      <div class="scenario">
+        一覺醒來，時間來到2075年。<br><br>
+        想想五十年後的你，<b>穿著打扮、工作環境、生活環境、食衣住行</b>會有什麼不同？請畫出「五十年後的我」，展現未來生活最令你期待的一個場景。
+      </div>
+
+      <div class="section-label">必要元素</div>
+      <div class="req-list">
+        <div class="req-item"><div class="dot dot-drawing"></div>主角清楚呈現「未來版本的自己」，年齡特徵可見</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>環境有明顯未來感（建築、交通、服裝設計等）</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>場景有故事性：主角在做某件事，不只是站著</div>
+        <div class="req-item"><div class="dot dot-drawing"></div>整體構圖飽滿，前中後景具備</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════
+     Scratch 組
+═══════════════════════════ -->
+<div class="panel" id="panel-scratch">
+  <div class="grp-header" style="border-color:rgba(245,158,11,.2);background:rgba(245,158,11,.05)">
+    <div class="grp-icon">🐱</div>
+    <div>
+      <div class="grp-name c-scratch">Scratch 創意設計組</div>
+      <div class="grp-meta">
+        <span class="chip chip-scratch">Scratch 3.0</span>
+        <span class="chip chip-scratch">⏱️ 3小時</span>
+        <span class="chip chip-scratch">📁 存 .sb3 上傳</span>
+        <span class="chip chip-scratch">🗺️ 心智圖必交</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scratch 一 -->
+  <div class="q-block open" id="sc1">
+    <div class="q-head" onclick="toggle('sc1')">
+      <div class="q-num num-scratch">一</div>
+      <div class="q-label">垃圾分類大挑戰——限時互動分類遊戲</div>
+      <div class="q-src">仿台中市113年 × 雲林縣</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="q-body">
+      <div class="topic">♻️ 垃圾分類大挑戰</div>
+      <div class="scenario">
+        台灣的垃圾分類做得如何？你能在時間壓力下，把垃圾正確分到對的桶子嗎？<br><br>
+        請製作一個<b>垃圾分類互動遊戲</b>：畫面上方隨機出現垃圾物品（寶特瓶、廚餘、電池……），玩家在限時內拖曳到正確回收桶，答對得分、答錯扣分。
+      </div>
+
+      <div class="section-label">必備功能</div>
+      <div class="req-list">
+        <div class="req-item"><div class="dot dot-scratch"></div>開始畫面：遊戲標題 + 說明 + 開始按鈕</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>至少5種垃圾物品，隨機出現</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>至少3種回收桶（資源回收、廚餘、一般垃圾），標示清楚</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>計分：答對 +10分，答錯 -5分，即時顯示</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>倒數計時30秒，時間到顯示結果畫面</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>結果畫面：總分 + 重玩按鈕</div>
+        <div class="req-item"><div class="dot" style="background:#fcd34d"></div><b style="color:#fcd34d">⭐ 心智圖（必交）</b>：角色清單、變數清單、流程圖</div>
+      </div>
+
+      <div class="section-label">核心積木架構</div>
+      <div class="blocks">
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">🔄</div><b style="color:#fcd34d">廣播機制</b>：「遊戲開始」「垃圾出現」「答對」「答錯」「時間到」</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">📦</div><b style="color:#fcd34d">清單</b>：建立「垃圾種類」清單，隨機取第 X 項顯示</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">🖱️</div><b style="color:#fcd34d">拖曳判斷</b>：放下時 → 碰到桶子 → 廣播對應結果</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">⏱️</div><b style="color:#fcd34d">計時器</b>：重設計時器 → 等待直到計時器 > 30 → 廣播時間到</div>
+      </div>
+
+      <div class="section-label">⏰ 3小時分配建議</div>
+      <div class="blocks">
+        <div class="blk"><div class="blk-icon" style="background:var(--s2)">📝</div>09:00–09:20｜畫心智圖（角色/變數/流程）</div>
+        <div class="blk"><div class="blk-icon" style="background:var(--s2)">🎨</div>09:20–09:45｜製作角色：垃圾物品×5+、回收桶×3、背景</div>
+        <div class="blk"><div class="blk-icon" style="background:var(--s2)">⚙️</div>09:45–10:30｜主流程：廣播架構、開始畫面、遊戲主迴圈</div>
+        <div class="blk"><div class="blk-icon" style="background:var(--s2)">🎮</div>10:30–11:20｜完成計分、計時、判斷答對答錯</div>
+        <div class="blk"><div class="blk-icon" style="background:var(--s2)">✨</div>11:20–11:40｜美化：音效、動畫、結果畫面</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">💾</div>11:40–12:00｜存 .sb3 上傳，截圖確認</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scratch 二 -->
+  <div class="q-block" id="sc2">
+    <div class="q-head" onclick="toggle('sc2')">
+      <div class="q-num num-scratch">二</div>
+      <div class="q-label">健康飲食小測驗——問答遊戲 + 分數計算</div>
+      <div class="q-src">仿台中市學校初賽 × 台南市</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="q-body">
+      <div class="topic">🥗 健康飲食小測驗</div>
+      <div class="scenario">
+        你知道每天應該攝取多少蔬菜？哪種食物含有最多維他命C？<br><br>
+        請製作一個<b>健康飲食知識問答遊戲</b>：出現題目與3個選項，玩家點擊作答，答對得分並給予鼓勵訊息，5題結束後顯示最終分數與評語。
+      </div>
+
+      <div class="section-label">必備功能</div>
+      <div class="req-list">
+        <div class="req-item"><div class="dot dot-scratch"></div>開始畫面 + 遊戲說明</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>至少5道題目，每題3個選項</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>答對顯示「答對！+10分」動畫，答錯顯示正確答案</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>題號進度顯示（第X題 / 共5題）</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>結果畫面：總分 + 3種評語（依分數不同）+ 重玩</div>
+        <div class="req-item"><div class="dot" style="background:#fcd34d"></div><b style="color:#fcd34d">⭐ 心智圖（必交）</b></div>
+      </div>
+
+      <div class="section-label">核心積木架構</div>
+      <div class="blocks">
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">📦</div>用<b style="color:#fcd34d">兩個清單</b>：「題目」清單 + 「答案」清單，用題號對應</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">🔄</div>廣播「下一題」→ 從清單取出 題號 項 → 顯示</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">🖱️</div>當選項按鈕被點擊 → 比對清單第 題號 項 → 判斷對錯</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scratch 三 -->
+  <div class="q-block" id="sc3">
+    <div class="q-head" onclick="toggle('sc3')">
+      <div class="q-num num-scratch">三</div>
+      <div class="q-label">路口交通安全模擬——行人過馬路避車遊戲</div>
+      <div class="q-src">仿台中市學校初賽得獎作品</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="q-body">
+      <div class="topic">🚦 路口交通安全模擬</div>
+      <div class="scenario">
+        每天上學要過馬路，你知道什麼時候該走、什麼時候要停嗎？<br><br>
+        請製作一個<b>交通安全模擬遊戲</b>：玩家控制行人角色過馬路，紅燈時移動會被扣分，安全到達對岸得分，倒數30秒計算最終得分。
+      </div>
+
+      <div class="section-label">必備功能</div>
+      <div class="req-list">
+        <div class="req-item"><div class="dot dot-scratch"></div>行人角色：玩家用方向鍵或WASD控制移動</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>燈號系統：每3秒自動切換紅燈/綠燈，有視覺提示</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>違規判斷：紅燈時行人在馬路上 → 廣播違規 → 扣20分 + 回起點</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>倒數計時30秒，時間到顯示分數</div>
+        <div class="req-item"><div class="dot dot-scratch"></div>汽車角色：綠燈時向左移動，增加難度</div>
+        <div class="req-item"><div class="dot" style="background:#fcd34d"></div><b style="color:#fcd34d">⭐ 心智圖（必交）</b></div>
+      </div>
+
+      <div class="section-label">核心積木架構</div>
+      <div class="blocks">
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">🔄</div><b style="color:#fcd34d">三件事同時執行</b>：燈號切換 / 倒數計時 / 玩家控制，各自獨立迴圈</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">📦</div>變數：「燈號狀態」（紅/綠）、「分數」、「計時器」、「過馬路次數」</div>
+        <div class="blk"><div class="blk-icon" style="background:rgba(245,158,11,.2)">⚠️</div>違規偵測：重複偵測「碰到馬路且燈號=紅」→ 立即廣播違規</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</main>
+
+<script>
+function show(group){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>{t.className='nav-tab'});
+  document.getElementById('panel-'+group).classList.add('active');
+  const cls={'slides':'active-slides','drawing':'active-drawing','scratch':'active-scratch'};
+  document.getElementById('tab-'+group).classList.add(cls[group]);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggle(id){
+  document.getElementById(id).classList.toggle('open');
+}
+</script>
+</body>
+</html>
